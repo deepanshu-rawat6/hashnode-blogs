@@ -57,7 +57,7 @@ The Master-Slave architecture addresses these challenges by separating the Jenki
 
 So, after implementing our Master-Slave architecture with ECS across multiple environments, and surprisingly we were able to achieve **60-70% cost reduction + way better scalability (and yes, these numbers can be true based on the fine tuning)**  
   
-**Shhh….we were able to roughly reduce it's size from about .2xlarge to .medium typed instance.**
+**Shhh….we were able to roughly reduce it's size from about .2xlarge to .small typed instance.**
 
 I’ll cover how we were able to drive these savings and the actual ROI analysis in the next blog.
 
