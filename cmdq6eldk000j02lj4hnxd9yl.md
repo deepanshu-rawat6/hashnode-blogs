@@ -55,7 +55,9 @@ The Master-Slave architecture addresses these challenges by separating the Jenki
 
 # Impact: What We Actually Did (and How You Can Too!)
 
-So, after implementing our Master-Slave architecture with ECS across multiple environments, and surprisingly we were able to achieve **60-70% cost reduction + way better scalability (and yes, these numbers can be true based on the fine tuning)**
+So, after implementing our Master-Slave architecture with ECS across multiple environments, and surprisingly we were able to achieve **60-70% cost reduction + way better scalability (and yes, these numbers can be true based on the fine tuning)**  
+  
+**Shhh….we were able to roughly reduce it's size from about .2xlarge to .medium typed instance.**
 
 I’ll cover how we were able to drive these savings and the actual ROI analysis in the next blog.
 
@@ -188,10 +190,9 @@ Moving on, using ECS Fargate as Jenkins agents, require a few steps in `AWS Con
         
     * For the launch type, select `Fargate`, and rest of the settings as in the image given above:
         
-          
         Note: For `Fargate` use `awsvpc` in the Network mode. Also, for `Operating System Family` most commonly `Linux` would be your choice, but there are other `Windows` related options as well
         
-        And for `CPU Architecture`, you can either go with `X86_64` or `ARM64`  
+        And for `CPU Architecture`, you can either go with `X86_64` or `ARM64`
         
     * Define the `soft/hard Memory Reservations` , `CPU units`, `ephemeral storage`, `subnets` and `security groups`.
         
@@ -258,7 +259,7 @@ For heavy workloads, or in case of requirement of `root` access(in case of DinD 
         
     * For the launch type, select `EC2` , and rest of the settings as in the image given above
         
-        Also, for `Operating System Family` most commonly `Linux` would be your choice, but there are other `Windows` related options as well. And for `CPU Architecture`, you can either go with `X86_64` or `ARM64`  
+        Also, for `Operating System Family` most commonly `Linux` would be your choice, but there are other `Windows` related options as well. And for `CPU Architecture`, you can either go with `X86_64` or `ARM64`
         
         Heads-up: For `EC2` based ECS, don’t forget to check the `Default Capacity Provider` , in our case it is the ASG we’ve made using terraform. And the network-mode will be `default`, instead of `awsvpc` as we did in `Fargate` profile.
         
