@@ -188,17 +188,16 @@ Moving on, using ECS Fargate as Jenkins agents, require a few steps in `AWS Con
         
     * For the launch type, select `Fargate`, and rest of the settings as in the image given above:
         
-        Note: For `Fargate` use `awsvpc` in the Network mode.
+          
+        Note: For `Fargate` use `awsvpc` in the Network mode. Also, for `Operating System Family` most commonly `Linux` would be your choice, but there are other `Windows` related options as well
         
-        Also, for `Operating System Family` most commonly `Linux` would be your choice, but there are other `Windows` related options as well
-        
-        And for `CPU Architecture`, you can either go with `X86_64` or `ARM64`
+        And for `CPU Architecture`, you can either go with `X86_64` or `ARM64`  
         
     * Define the `soft/hard Memory Reservations` , `CPU units`, `ephemeral storage`, `subnets` and `security groups`.
         
         ![](https://cdn.hashnode.com/res/hashnode/image/upload/v1753798817666/23c9cc3f-2249-439a-a098-00c219b6b4cb.png align="center")
         
-    * Now, under Advanced, give the `task role ARN` and `task execution role ARN`, and enable `Command Execution`.
+    * Now, under Advanced, give the `task role ARN` and `task execution role ARN`.
         
     * Also, don’t forgot to check the `Enable Command Execution` , as this would allow our Jenkinsfile to be executed on the agent node.
         
@@ -259,9 +258,7 @@ For heavy workloads, or in case of requirement of `root` access(in case of DinD 
         
     * For the launch type, select `EC2` , and rest of the settings as in the image given above
         
-        Also, for `Operating System Family` most commonly `Linux` would be your choice, but there are other `Windows` related options as well
-        
-        And for `CPU Architecture`, you can either go with `X86_64` or `ARM64`
+        Also, for `Operating System Family` most commonly `Linux` would be your choice, but there are other `Windows` related options as well. And for `CPU Architecture`, you can either go with `X86_64` or `ARM64`  
         
         Heads-up: For `EC2` based ECS, don’t forget to check the `Default Capacity Provider` , in our case it is the ASG we’ve made using terraform. And the network-mode will be `default`, instead of `awsvpc` as we did in `Fargate` profile.
         
@@ -273,7 +270,7 @@ For heavy workloads, or in case of requirement of `root` access(in case of DinD 
         
         ![](https://cdn.hashnode.com/res/hashnode/image/upload/v1753798817666/23c9cc3f-2249-439a-a098-00c219b6b4cb.png align="center")
         
-    * Now, under Advanced, give the `task role ARN` and `task execution role ARN`, and enable `Command Execution`.
+    * Now, under Advanced, give the `task role ARN` and `task execution role ARN`.
         
     * Also, don’t forgot to check the `Enable Command Execution` , as this would allow our Jenkinsfile to be executed on the agent node.
         
