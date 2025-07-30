@@ -55,9 +55,9 @@ The Master-Slave architecture addresses these challenges by separating the Jenki
 
 # Impact: What We Actually Did (and How You Can Too!)
 
-So, after implementing our Master-Slave architecture with ECS across multiple environments, and surprisingly we were able to achieve **60-70% cost reduction + way better scalability (and yes, these numbers can be true based on the fine tuning)**  
-  
-I’ll cover how we were able to drive these savings and the actual ROI analysis in the next blog.  
+So, after implementing our Master-Slave architecture with ECS across multiple environments, and surprisingly we were able to achieve **60-70% cost reduction + way better scalability (and yes, these numbers can be true based on the fine tuning)**
+
+I’ll cover how we were able to drive these savings and the actual ROI analysis in the next blog.
 
 ---
 
@@ -115,7 +115,7 @@ For the complete IaC setup follow the steps provided in the [BLOG.md](https://gi
 
 You can craft your own Docker Images for the Jenkins agents based on the type of dependencies in the Jenkins jobs or if you want a minimal image to start with choose the `inbound-agent:latest` or alpine variants of `inbound-agent` image.
 
-### General purpose dockerfile
+### General purpose Dockerfile
 
 ```dockerfile
 ARG DOCKER_DEFAULT_PLATFORM=linux/amd64
@@ -148,8 +148,8 @@ Build these docker image and push them into a private ECR.
 
 I hope, you’ve implemented the whole infra for following the steps provided in the [BLOG.md](https://github.com/deepanshu-rawat6/Jenkins-Master-Slave-infra-tf/blob/master/BLOG.md)
 
-So….before setting up the agents, we need to install the most important plugin, which would allow us to harness ECS tasks and that is the [**ECS Fargate Plugin**](https://plugins.jenkins.io/amazon-ecs/). We’d be choosing  1.49 version of this plugin.  
-  
+So….before setting up the agents, we need to install the most important plugin, which would allow us to harness ECS tasks and that is the [**ECS Fargate Plugin**](https://plugins.jenkins.io/amazon-ecs/). We’d be choosing  1.49 version of this plugin.
+
 Then, we need to allow a port for the inbound agents aka Jenkins to ping the Master node, so for that go to `Manage Jenkins > Security`, scroll down for a bit and find `Agents`, you can allowing any port you want, make sure you’re whitelisting it in the security group of the Master Jenkins instance, and in the docker-compose file for our Master Jenkins container.
 
 ![](https://cdn.hashnode.com/res/hashnode/image/upload/v1753805551849/b3282536-f5f7-4a7f-aee9-4cf8bdab452d.png align="center")
@@ -333,8 +333,8 @@ pipeline {
     
     ![](https://cdn.hashnode.com/res/hashnode/image/upload/v1753810476200/4e6bc4f2-22ef-448c-9b69-fafc8c3fde15.png align="center")
     
-* So, in the above image, as you can a line, **‘testing-testing-agent-17-2d1cc-v99bh’ is offline**, as stated in the plugin documentation the following syntax is followed for creating an agent name: {label}-{job-name}-{job-run-number}-{5-random-chars}. So, in our case **‘testing-testing-agent-17-2d1cc-v99bh’,** first `testing` is the label provided, followed by Job Name(testing-agent), then build number(17) and then some random characters, and some more characters.  
-      
+* So, in the above image, as you can a line, **‘testing-testing-agent-17-2d1cc-v99bh’ is offline**, as stated in the plugin documentation the following syntax is followed for creating an agent name: {label}-{job-name}-{job-run-number}-{5-random-chars}. So, in our case **‘testing-testing-agent-17-2d1cc-v99bh’,** first `testing` is the label provided, followed by Job Name(testing-agent), then build number(17) and then some random characters, and some more characters.
+    
     Note: Don’t worry if you see suspended written under Build Executor Status, it is normal behavior of the plugin
     
     ![](https://cdn.hashnode.com/res/hashnode/image/upload/v1753810926315/a3ec90eb-2f69-4df1-866e-fc47acfb794a.png align="center")
@@ -377,17 +377,16 @@ pipeline {
 
 So, implementing the AWS ECS approach, wasn’t bread and butter, we did face challenges related to Jenkins Cloud configurations, security groups, and many more. I’ll list a few challenges here:
 
-* Improper documentation and lack of online resources for implementing this approach, although the documentation is pretty apt, but some places it are left to be for try and find out like the `Allowing declarative settings` to be set `all`, which lets us override the parent task definition.  
-      
-    Fun Fact: The whole Cloud config acts like a task definition, so using `Allowing declarative settings`, we are able to override : `cpu` , `memory` , `logDriver` , `logDriverOptions([[name: 'foo', value:'bar']])` , `portMappings([[containerPort: <port>, hostPort: <port>, protocol: 'tcp']])`.  
-      
+* Improper documentation and lack of online resources for implementing this approach, although the documentation is pretty apt, but some places it are left to be for try and find out like the `Allowing declarative settings` to be set `all`, which lets us override the parent task definition.
+    
+    Fun Fact: The whole Cloud config acts like a task definition, so using `Allowing declarative settings`, we are able to override : `cpu` , `memory` , `logDriver` , `logDriverOptions([[name: 'foo', value:'bar']])` , `portMappings([[containerPort: <port>, hostPort: <port>, protocol: 'tcp']])`.
+    
     Similarly, for `EC2 based ECS`, I couldn’t find any resource to follow along so it was most try around and find out :)
     
 * Another one, please don’t forget to click on `Enable Command Execution` , as this would allow our Jenkinsfile to be executed on the agent node.
     
     ![](https://cdn.hashnode.com/res/hashnode/image/upload/v1753798848874/9879f0b4-119e-4437-9ad4-eb0ebf8e26c6.png align="center")
     
-
 * So, we faced a lot of issues regarding reach-ability of Jenkins agents to Master node, making sure we’re listing and allowing traffic to the correct port for inbound agents under `Security` in Jenkins
     
 * Using inbound-agent as the base image is a must, with ENTRYPOINT set to `["/usr/local/bin/jenkins-agent"]`, in the Dockerfile. If your tinkering around other base image, don’t forget to take `agent.jar` , `slave.jar` and `jenkins-agent` from the inbound-agent.
@@ -404,8 +403,8 @@ So, implementing the AWS ECS approach, wasn’t bread and butter, we did face ch
     ENTRYPOINT [ "/usr/local/bin/jenkins-agent" ]
     ```
     
-* Making sure that the correct version of Docker Image for the Jenkins agent is present in your ECR, or wherever you’ve pushed your agent’s docker image. Otherwise, ECS tasks would first, return `de-provisioning` and then would return:  
-      
+* Making sure that the correct version of Docker Image for the Jenkins agent is present in your ECR, or wherever you’ve pushed your agent’s docker image. Otherwise, ECS tasks would first, return `de-provisioning` and then would return:
+    
     **Stopped reason:** CannotPullContainerError: pull image manifest has been retried 1 time(s): failed to resolve ref &lt;IMAGE\_PROVIDED&gt;: &lt;IMAGE\_PROVIDED&gt;: not found.
     
 
@@ -423,7 +422,7 @@ Begin small, experiment, and expand as you learn. Your Jenkins infrastructure ca
 
 ## Ready to Transform Jenkins?
 
-* Clone the [Terraform modules & guid](https://github.com/deepanshu-rawat6/Jenkins-Master-Slave-infra-tf)[e.](https://github.com/deepanshu-rawat6/Jenkins-Master-Slave-infra-tf)
+* Clone the [Terraform modules & guide.](https://github.com/deepanshu-rawat6/Jenkins-Master-Slave-infra-tf)
     
 * Start small, experiment safely, then ramp up.
     
