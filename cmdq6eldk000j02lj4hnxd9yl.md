@@ -15,7 +15,7 @@ So, as we know `Jenkins` is one of the most battle-tested automation tool in the
 
 How to avoid such costs? How to improve?
 
-Enter……drum…roll…please……`Master-Slave` architecture, but wait we need to discuss the caveats of `traditional` Jenkins setup.
+Enter……drum…roll…please……`Master-Agent` architecture, but wait we need to discuss the caveats of `traditional` Jenkins setup.
 
 ---
 
@@ -34,11 +34,11 @@ Traditional Jenkins deployments typically involve a single, powerful server that
 
 ---
 
-# Solution: Master-Slave Architecture
+# Solution: Master-Agent Architecture
 
 ![](https://cdn.hashnode.com/res/hashnode/image/upload/v1753614912121/bc163038-474a-447e-afd9-ba274fad78b3.png align="center")
 
-The Master-Slave architecture addresses these challenges by separating the Jenkins master (controller) from the build execution environment (agents). For this we would be using AWS ECS for running our Jenkins agents and following that we can right size our master Jenkins instance to maybe a lower config, just for scheduling our workloads. Our agents will be utilizing the jenkins’ `inbound agent` image, which would run on ECS Fargate and EC2 based ECS. This approach offers:
+The Master-Agent architecture addresses these challenges by separating the Jenkins master (controller) from the build execution environment (agents). For this we would be using AWS ECS for running our Jenkins agents and following that we can right size our master Jenkins instance to maybe a lower config, just for scheduling our workloads. Our agents will be utilizing the jenkins’ `inbound agent` image, which would run on ECS Fargate and EC2 based ECS. This approach offers:
 
 * **Dynamic scaling**: Agents can be provisioned on-demand and terminated when not needed
     
@@ -55,8 +55,8 @@ The Master-Slave architecture addresses these challenges by separating the Jenki
 
 # Impact: What We Actually Did (and How You Can Too!)
 
-So, after implementing our Master-Slave architecture with ECS across multiple environments, and surprisingly we were able to achieve **60-70% cost reduction + way better scalability (and yes, these numbers can be true based on the fine tuning)**  
-  
+So, after implementing our Master-Agent architecture with ECS across multiple environments, and surprisingly we were able to achieve **60-70% cost reduction + way better scalability (and yes, these numbers can be true based on the fine tuning)**
+
 **Shhh….we were able to roughly reduce it's size from about .2xlarge to .small typed instance.**
 
 I’ll cover how we were able to drive these savings and the actual ROI analysis in the next blog.
@@ -410,7 +410,7 @@ So, implementing the AWS ECS approach, wasn’t bread and butter, we did face ch
 
 # Conclusion
 
-Adopting a Jenkins Master-Slave (Controller-Agent) architecture with AWS ECS is more than just a technical tweak—it’s a transformation in how you approach CI/CD. By shifting away from rigid, monolithic servers to scalable, on-demand cloud agents, you can significantly reduce operational costs, eliminate infrastructure bottlenecks, and free your teams to move faster and more confidently.
+Adopting a Jenkins Master-Agent (Controller-Agent) architecture with AWS ECS is more than just a technical tweak—it’s a transformation in how you approach CI/CD. By shifting away from rigid, monolithic servers to scalable, on-demand cloud agents, you can significantly reduce operational costs, eliminate infrastructure bottlenecks, and free your teams to move faster and more confidently.
 
 This hybrid strategy—leveraging Fargate for standard tasks, EC2 for heavy workloads, and Spot for non-critical jobs—gives you the flexibility and efficiency that modern teams demand. With Infrastructure as Code, your setup is reproducible, manageable, and ready to scale with your needs.
 
