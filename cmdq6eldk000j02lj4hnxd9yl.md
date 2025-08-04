@@ -7,7 +7,6 @@ cuid: cmdq6eldk000j02lj4hnxd9yl
 slug: mastering-jenkins-cost-efficiency-scalable-cicd-with-aws-ecs-master-agent-architecture
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1744542855284/4883bd51-bdcf-432e-bbc7-c58e1fe3a1d0.jpeg
 ogImage: https://cdn.hashnode.com/res/hashnode/image/upload/v1753892219481/458832bf-97d3-4ef5-9d45-6dfafd0385e3.png
-tags: cloud, aws, devops, jenkins, finops
 
 ---
 
