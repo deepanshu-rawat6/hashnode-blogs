@@ -108,7 +108,7 @@ We're implementing a hybrid approach using AWS ECS with Infrastructure as Code p
 
 ## Complete Infrastructure as Code Implementation
 
-For the complete IaC setup follow the steps provided in the [BLOG.md](https://github.com/deepanshu-rawat6/Jenkins-Master-Slave-infra-tf/blob/master/BLOG.md), also the source code for all terraform files in present under this repository, click [here](https://github.com/deepanshu-rawat6/Jenkins-Master-Slave-infra-tf).
+For the complete IaC setup follow the steps provided in the [BLOG.md](https://github.com/deepanshu-rawat6/Jenkins-Master-Agent-infra-tf/blob/master/BLOG.md), also the source code for all terraform files in present under this repository, click [here](https://github.com/deepanshu-rawat6/Jenkins-Master-Agent-infra-tf).
 
 ---
 
