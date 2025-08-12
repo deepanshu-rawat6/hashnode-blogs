@@ -35,7 +35,7 @@ Traditional Jenkins deployments typically involve a single, powerful server that
 
 # Solution: Master-Agent Architecture
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1753614912121/bc163038-474a-447e-afd9-ba274fad78b3.png align="center")
+![](https://cdn.hashnode.com/res/hashnode/image/upload/v1755013164461/042e2148-061a-4242-a0e7-81975211c084.png align="center")
 
 The Master-Agent architecture addresses these challenges by separating the Jenkins master (controller) from the build execution environment (agents). For this we would be using AWS ECS for running our Jenkins agents and following that we can right size our master Jenkins instance to maybe a lower config, just for scheduling our workloads. Our agents will be utilizing the jenkins’ `inbound agent` image, which would run on ECS Fargate and EC2 based ECS. This approach offers:
 
