@@ -6,7 +6,6 @@ datePublished: Thu Nov 20 2025 17:52:40 GMT+0000 (Coordinated Universal Time)
 cuid: cmi7qbh6o000502kyf32vafu8
 slug: creating-and-hosting-a-jenkins-plugin-a-complete-guide
 ogImage: https://cdn.hashnode.com/res/hashnode/image/upload/v1763660813469/69d0c493-2077-4969-abf0-5eeb93775e88.png
-tags: plugins, jenkins
 
 ---
 
